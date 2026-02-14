@@ -1,133 +1,144 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Nita 💞</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body {
-  margin:0;
-  background:black;
-  color:white;
-  text-align:center;
-  font-family:sans-serif;
-  overflow:hidden;
+body{
+margin:0;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+font-family:sans-serif;
+text-align:center;
+color:white;
 }
 
-#login {
-  margin-top:40%;
+.box{
+background:rgba(255,255,255,0.2);
+margin:30px;
+padding:20px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+opacity:0;
+transition:1s;
 }
 
-input {
-  padding:10px;
-  border-radius:10px;
-  border:none;
+.show{opacity:1;}
+
+button{
+padding:10px 20px;
+margin:10px;
+border:none;
+border-radius:20px;
+background:white;
+color:#ff4e91;
+font-weight:bold;
 }
 
-button {
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  margin:10px;
-  background:pink;
-  color:white;
-}
-
-#main {
-  display:none;
-  margin-top:30%;
-}
-
-.heart {
-  position:absolute;
-  color:pink;
-  font-size:20px;
-  animation:fall 5s linear infinite;
-}
-
-@keyframes fall {
-  0% {transform:translateY(-10vh);}
-  100% {transform:translateY(110vh);}
+#s2,#s3,#s4,#s5,#s6,#happy,#sad,#secret{
+display:none;
 }
 </style>
 </head>
 
 <body>
 
-<div id="login">
-<h2>Masukkan Password 🔐</h2>
-<input type="password" id="pw">
-<br>
-<button onclick="cek()">Masuk</button>
+<audio id="click" src="klik.mp3"></audio>
+
+<div class="box show" id="s1">
+<h2>Valentine Story 💘</h2>
+<p>Hari ini Valentine... Fian kepikiran kamu 🥺</p>
+<button onclick="next('s1','s2')">Lihat Chat</button>
 </div>
 
-<div id="main">
-<h2>Do You Love Me? 💖</h2>
-<button onclick="yes()">YES</button>
-<button onclick="no()">NO</button>
-<h3 id="result"></h3>
+<div class="box" id="s2">
+<p>Pesan dari kamu:<br>"Aku kangen 😭"</p>
+<button onclick="next('s2','s3')">Balas</button>
+</div>
+
+<div class="box" id="s3">
+<p>Apa yang Fian lakukan?</p>
+<button onclick="next('s3','s4')">Telpon 📞</button>
+<button onclick="next('s3','s4')">Video Call 🎥</button>
+</div>
+
+<div class="box" id="s4">
+<p>VC 2 jam... tapi gak bisa peluk 😔</p>
+<br>
+<img src="foto1.jpg" onclick="klikSecret()" width="150">
+<p><small>(klik foto 3x 😉)</small></p>
+<button onclick="next('s4','s5')">Lanjut</button>
+</div>
+
+<div class="box" id="s5">
+<h3>Tebak Tebakan 😆</h3>
+<p>Apa bedanya kamu sama bintang?</p>
+<button onclick="next('s5','s6')">Kamu lebih bersinar ✨</button>
+</div>
+
+<div class="box" id="s6">
+<h3>Pertanyaan Terakhir 💖</h3>
+<p>Kamu mau tetap sama Fian walaupun LDR?</p>
+<button onclick="ending('happy')">Mau 🥺</button>
+<button onclick="ending('sad')">Gak Tau 😭</button>
+</div>
+
+<div class="box" id="happy">
+<h2>Happy Ending 💘</h2>
+<p>Makasih udah tetap bertahan ❤️</p>
+<button onclick="wa('Aku mau terus sama kamu 💞')">Balas ke WA Fian</button>
+</div>
+
+<div class="box" id="sad">
+<h2>Sad Ending 😭</h2>
+<p>Fian tetap sayang kamu...</p>
+<button onclick="wa('Maaf aku belum bisa jadi yang terbaik 😔')">Balas ke WA Fian</button>
+</div>
+
+<div class="box" id="secret">
+<h2>Secret Ending 💖</h2>
+<p>Kamu nemuin ending rahasia 🥺<br>Fian bener-bener sayang kamu ❤️</p>
+<button onclick="wa('Aku nemuin secret ending 💘')">Balas ke WA Fian</button>
 </div>
 
 <script>
 
-function cek(){
-let p=document.getElementById("pw").value;
-if(p=="nita123"){
-document.getElementById("login").style.display="none";
-document.getElementById("main").style.display="block";
-startMusic();
-startLove();
-}else{
-alert("Password Salah 😭");
+let klik=0;
+
+function sound(){
+document.getElementById("click").play();
+}
+
+function next(a,b){
+sound();
+document.getElementById(a).style.display="none";
+let el=document.getElementById(b);
+el.style.display="block";
+setTimeout(()=>el.classList.add("show"),100);
+}
+
+function ending(e){
+sound();
+document.getElementById("s6").style.display="none";
+let el=document.getElementById(e);
+el.style.display="block";
+setTimeout(()=>el.classList.add("show"),100);
+}
+
+function klikSecret(){
+sound();
+klik++;
+if(klik==3){
+document.getElementById("s4").style.display="none";
+let el=document.getElementById("secret");
+el.style.display="block";
+setTimeout(()=>el.classList.add("show"),100);
 }
 }
 
-function yes(){
-document.getElementById("result").innerHTML="I Love You So Much Nita 💞";
-}
-
-function no(){
-document.getElementById("result").innerHTML="Yah Ditolak 😭";
-}
-
-function startLove(){
-setInterval(()=>{
-let c=document.createElement("div");
-c.className="heart";
-c.innerHTML="💖";
-c.style.left=Math.random()*100+"vw";
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),5000);
-},300);
-}
-
-function startMusic(){
-const AudioContext=window.AudioContext||window.webkitAudioContext;
-const ctx=new AudioContext();
-
-function play(freq,time){
-let o=ctx.createOscillator();
-let g=ctx.createGain();
-o.connect(g);
-g.connect(ctx.destination);
-o.frequency.value=freq;
-o.type="sine";
-g.gain.setValueAtTime(0.2,ctx.currentTime);
-o.start();
-o.stop(ctx.currentTime+time);
-}
-
-let melody=[262,294,330,349,392,440,494,523];
-let i=0;
-
-setInterval(()=>{
-play(melody[i%melody.length],0.4);
-i++;
-},500);
+function wa(text){
+window.open("https://wa.me/6282131984369?text="+text);
 }
 
 </script>
-
 </body>
 </html>
